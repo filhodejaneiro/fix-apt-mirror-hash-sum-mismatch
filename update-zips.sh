@@ -36,6 +36,6 @@ for dist in $dist_names; do
 done
 
 # Clean 0B files
-for file in $(for i in $(find "$local_mirror" | grep --color=none 'Packages$'); do file "$i"; done | grep "empty" | awk -F\: '{print $1}'); do
+for file in $(for i in $(find "$local_mirror" -size 0); do
   rm -f $file
 done
