@@ -23,7 +23,7 @@ for dist in $dist_names; do
   curl --silent -L $mirror/$dist/Release.gpg                      -o $local_mirror/$dist/Release.gpg
   for repo in ${repos[@]}; do
     echo "Updating $dist/$repo"
-    mkdir -p $local_mirror/$dist/$repo/{source,binary-i386}
+    mkdir -p $local_mirror/$dist/$repo/{source,binary-i386,binary-amd64}
     curl --silent -L $mirror/$dist/$repo/source/Release           -o $local_mirror/$dist/$repo/source/Release
     curl --silent -L $mirror/$dist/$repo/source/Sources.bz2       -o $local_mirror/$dist/$repo/source/Sources.bz2
     curl --silent -L $mirror/$dist/$repo/source/Sources.gz        -o $local_mirror/$dist/$repo/source/Sources.gz
@@ -32,10 +32,14 @@ for dist in $dist_names; do
     curl --silent -L $mirror/$dist/$repo/binary-i386/Packages.gz  -o $local_mirror/$dist/$repo/binary-i386/Packages.gz
     curl --silent -L $mirror/$dist/$repo/binary-i386/Packages     -o $local_mirror/$dist/$repo/binary-i386/Packages
     curl --silent -L $mirror/$dist/$repo/binary-i386/Release      -o $local_mirror/$dist/$repo/binary-i386/Release
+    curl --silent -L $mirror/$dist/$repo/binary-amd64/Packages.bz2 -o $local_mirror/$dist/$repo/binary-amd64/Packages.bz2
+    curl --silent -L $mirror/$dist/$repo/binary-amd64/Packages.gz  -o $local_mirror/$dist/$repo/binary-amd64/Packages.gz
+    curl --silent -L $mirror/$dist/$repo/binary-amd64/Packages     -o $local_mirror/$dist/$repo/binary-amd64/Packages
+    curl --silent -L $mirror/$dist/$repo/binary-amd64/Release      -o $local_mirror/$dist/$repo/binary-amd64/Release
   done
 done
 
 # Clean 0B files
-for file in $(for i in $(find "$local_mirror" -size 0); do
+for file in $(find "$local_mirror" -size 0); do
   rm -f $file
 done
